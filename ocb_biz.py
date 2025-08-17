@@ -30,7 +30,6 @@ class OCB:
                 self.proxies = None
         else:
             self.proxies = None
-        self.file = f"data/{username}.txt"
         self.url = {
             "base_api": "https://omnicorp.ocb.com.vn/frontend-web/app/j_spring_security_check",
             "account_list": "https://omnicorp.ocb.com.vn/frontend-web/api/account_cb",

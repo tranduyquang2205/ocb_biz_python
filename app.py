@@ -35,17 +35,7 @@ class ConfirmDetails(BaseModel):
     account_number: str
     otp: str
     proxy_list: list
-@app.post('/confirm', tags=["confirm"])
-def confirm_api(input: ConfirmDetails):
-    try:
-        ocb = OCB(input.username, input.password, input.account_number,input.proxy_list)
-        verify_otp = ocb.verify_otp(input.otp)
-        return APIResponse.json_format(verify_otp)
-    except Exception as e:
-        response = str(e)
-        print(traceback.format_exc())
-        print(sys.exc_info()[2])
-        return APIResponse.json_format(response)
+
 @app.post('/get_balance', tags=["get_balance"])
 def get_balance_api(input: LoginDetails):
     try:
@@ -62,13 +52,15 @@ class Transactions(BaseModel):
     username: str
     password: str
     account_number: str
+    from_date: str
+    to_date: str
     limit: int
     proxy_list: list
 @app.post('/get_transactions', tags=["get_transactions"])
 def get_transactions_api(input: Transactions):
     try:
         ocb = OCB(input.username, input.password, input.account_number,input.proxy_list)
-        transaction = ocb.get_transactions(input.account_number,input.limit)
+        transaction = ocb.get_transactions(input.account_number,input.from_date,input.to_date, input.limit)
         return APIResponse.json_format(transaction)
     except Exception as e:
         response = str(e)
