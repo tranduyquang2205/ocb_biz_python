@@ -181,7 +181,7 @@ class OCB:
         result = self.curl_post(self.url["base_api"], params)
         return result
     def do_login(self):
-        if not self.session.cookies:
+        if not self.session.cookies or time.time() - self.time_login > 3600:
             check_user_name = self.check_user_name()
             if not ('method' in check_user_name and check_user_name['method'] == 'MASKED_PASSWORD'):
                 return {
